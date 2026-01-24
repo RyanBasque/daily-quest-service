@@ -1,0 +1,41 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema, UserSchemaFactory } from './schemas/user.schema';
+import { UserRepositoryImpl } from '../repositories/user.repository';
+
+@Module({
+  imports: [
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const uri = configService.get<string>('MONGODB_URI');
+        console.log('🔄 [MongoDB] Tentando conectar ao banco de dados...');
+        console.log('🔗 [MongoDB] URI:', uri?.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@')); // Oculta a senha no log
+        
+        return {
+          uri,
+          onConnectionCreate: (connection) => {
+            connection.on('connected', () => {
+              console.log('✅ [MongoDB] Conectado com sucesso!');
+            });
+            connection.on('error', (error) => {
+              console.error('❌ [MongoDB] Erro na conexão:', error.message);
+            });
+            connection.on('disconnected', () => {
+              console.log('⚠️  [MongoDB] Desconectado do banco de dados');
+            });
+            return connection;
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+    MongooseModule.forFeature([
+      { name: UserSchema.name, schema: UserSchemaFactory },
+    ]),
+  ],
+  providers: [UserRepositoryImpl],
+  exports: [UserRepositoryImpl, MongooseModule],
+})
+export class DatabaseModule {}
