@@ -35,9 +35,53 @@ npm install
 
 ## Configuração
 
-1. Copie o arquivo `.env.example` para `.env`
-2. Configure a URL do MongoDB na variável `MONGODB_URI`
-3. Configure a chave secreta JWT na variável `JWT_SECRET`
+### 1. Configure as variáveis de ambiente
+
+Copie o arquivo `.env.example` para `.env`:
+
+```bash
+cp .env.example .env
+```
+
+### 2. Configure o MongoDB
+
+**Opção A: MongoDB Atlas (Recomendado)**
+```env
+MONGODB_URI=mongodb+srv://usuario:senha@cluster.mongodb.net/daily-quest-db?retryWrites=true&w=majority
+```
+
+**Opção B: MongoDB Local**
+```env
+MONGODB_URI=mongodb://localhost:27017/daily-quest-db
+```
+
+**⚠️ Problemas de conexão?** Veja o [Guia de Configuração do MongoDB](./MONGODB_SETUP.md)
+
+### 3. Configure o JWT
+
+```env
+JWT_SECRET=sua-chave-secreta-aqui-mude-em-producao
+JWT_EXPIRATION=1d
+```
+
+### 4. Verifique a configuração
+
+Depois de configurar o `.env`, teste a conexão com o MongoDB:
+
+```bash
+npm install
+npm run test:mongodb
+```
+
+Se a conexão for bem-sucedida, você verá: `✅ Conexão com MongoDB estabelecida com sucesso!`
+
+Em seguida, inicie a aplicação:
+
+```bash
+npm run start:dev
+```
+
+Você deve ver: `✅ [MongoDB] Conectado com sucesso!`
 
 ## Executar
 
@@ -59,6 +103,42 @@ npm run start:prod
   {
     "email": "user@example.com",
     "password": "password123"
+  }
+  ```
+
+### Progresso Anual (Annual Progress)
+
+Todos os endpoints requerem autenticação JWT.
+
+- `GET /progress/annual` - Lista todo o progresso anual do usuário
+- `GET /progress/annual/:year` - Obtém o progresso anual de um ano específico
+  - Exemplo: `GET /progress/annual/2026`
+- `POST /progress/annual` - Cria novo progresso anual
+  ```json
+  {
+    "year": 2026,
+    "progressPercentage": 75.5,
+    "totalTasks": 100,
+    "completedTasks": 75
+  }
+  ```
+
+### Progresso Semanal (Weekly Progress)
+
+Todos os endpoints requerem autenticação JWT.
+
+- `GET /progress/weekly` - Lista todo o progresso semanal do usuário
+- `GET /progress/weekly?year=2026` - Lista o progresso semanal de um ano específico
+- `GET /progress/weekly/:year/:week` - Obtém o progresso de uma semana específica
+  - Exemplo: `GET /progress/weekly/2026/7`
+- `POST /progress/weekly` - Cria novo progresso semanal
+  ```json
+  {
+    "year": 2026,
+    "weekNumber": 7,
+    "progressPercentage": 85.0,
+    "totalTasks": 20,
+    "completedTasks": 17
   }
   ```
 
