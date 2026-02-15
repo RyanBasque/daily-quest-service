@@ -66,7 +66,16 @@ JWT_EXPIRATION=1d
 
 ### 4. Verifique a configuração
 
-Depois de configurar o `.env`, inicie a aplicação e verifique se a conexão foi bem-sucedida:
+Depois de configurar o `.env`, teste a conexão com o MongoDB:
+
+```bash
+npm install
+npm run test:mongodb
+```
+
+Se a conexão for bem-sucedida, você verá: `✅ Conexão com MongoDB estabelecida com sucesso!`
+
+Em seguida, inicie a aplicação:
 
 ```bash
 npm run start:dev
