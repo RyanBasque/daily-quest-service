@@ -35,9 +35,44 @@ npm install
 
 ## Configuração
 
-1. Copie o arquivo `.env.example` para `.env`
-2. Configure a URL do MongoDB na variável `MONGODB_URI`
-3. Configure a chave secreta JWT na variável `JWT_SECRET`
+### 1. Configure as variáveis de ambiente
+
+Copie o arquivo `.env.example` para `.env`:
+
+```bash
+cp .env.example .env
+```
+
+### 2. Configure o MongoDB
+
+**Opção A: MongoDB Atlas (Recomendado)**
+```env
+MONGODB_URI=mongodb+srv://usuario:senha@cluster.mongodb.net/daily-quest-db?retryWrites=true&w=majority
+```
+
+**Opção B: MongoDB Local**
+```env
+MONGODB_URI=mongodb://localhost:27017/daily-quest-db
+```
+
+**⚠️ Problemas de conexão?** Veja o [Guia de Configuração do MongoDB](./MONGODB_SETUP.md)
+
+### 3. Configure o JWT
+
+```env
+JWT_SECRET=sua-chave-secreta-aqui-mude-em-producao
+JWT_EXPIRATION=1d
+```
+
+### 4. Verifique a configuração
+
+Depois de configurar o `.env`, inicie a aplicação e verifique se a conexão foi bem-sucedida:
+
+```bash
+npm run start:dev
+```
+
+Você deve ver: `✅ [MongoDB] Conectado com sucesso!`
 
 ## Executar
 
