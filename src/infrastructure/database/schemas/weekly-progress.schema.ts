@@ -3,9 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type WeeklyProgressDocument = HydratedDocument<WeeklyProgressSchema>;
 
-@Schema({ 
+@Schema({
   timestamps: true,
-  collection: 'weekly_progress'
+  collection: 'weekly_progress',
 })
 export class WeeklyProgressSchema {
   @Prop({ required: true })

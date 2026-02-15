@@ -2,8 +2,14 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema, UserSchemaFactory } from './schemas/user.schema';
-import { AnnualProgressSchema, AnnualProgressSchemaFactory } from './schemas/annual-progress.schema';
-import { WeeklyProgressSchema, WeeklyProgressSchemaFactory } from './schemas/weekly-progress.schema';
+import {
+  AnnualProgressSchema,
+  AnnualProgressSchemaFactory,
+} from './schemas/annual-progress.schema';
+import {
+  WeeklyProgressSchema,
+  WeeklyProgressSchemaFactory,
+} from './schemas/weekly-progress.schema';
 import { UserRepositoryImpl } from '../repositories/user.repository';
 import { AnnualProgressRepository } from '../repositories/annual-progress.repository';
 import { WeeklyProgressRepository } from '../repositories/weekly-progress.repository';
@@ -16,12 +22,9 @@ import { WeeklyProgressRepository } from '../repositories/weekly-progress.reposi
         const uri = configService.get<string>('MONGODB_URI');
         console.log('🔄 [MongoDB] Tentando conectar ao banco de dados...');
         if (uri) {
-          console.log(
-            '🔗 [MongoDB] URI:',
-            uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@'),
-          ); // Oculta a senha no log
+          console.log('🔗 [MongoDB] URI:', uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@')); // Oculta a senha no log
         }
-        
+
         return {
           uri,
           onConnectionCreate: (connection) => {

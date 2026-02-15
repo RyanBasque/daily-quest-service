@@ -3,9 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type AnnualProgressDocument = HydratedDocument<AnnualProgressSchema>;
 
-@Schema({ 
+@Schema({
   timestamps: true,
-  collection: 'annual_progress'
+  collection: 'annual_progress',
 })
 export class AnnualProgressSchema {
   @Prop({ required: true })
