@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema, UserSchemaFactory } from './schemas/user.schema';
+import { AnnualProgressSchema, AnnualProgressSchemaFactory } from './schemas/annual-progress.schema';
+import { WeeklyProgressSchema, WeeklyProgressSchemaFactory } from './schemas/weekly-progress.schema';
 import { UserRepositoryImpl } from '../repositories/user.repository';
+import { AnnualProgressRepository } from '../repositories/annual-progress.repository';
+import { WeeklyProgressRepository } from '../repositories/weekly-progress.repository';
 
 @Module({
   imports: [
@@ -47,9 +51,11 @@ import { UserRepositoryImpl } from '../repositories/user.repository';
     }),
     MongooseModule.forFeature([
       { name: UserSchema.name, schema: UserSchemaFactory },
+      { name: AnnualProgressSchema.name, schema: AnnualProgressSchemaFactory },
+      { name: WeeklyProgressSchema.name, schema: WeeklyProgressSchemaFactory },
     ]),
   ],
-  providers: [UserRepositoryImpl],
-  exports: [UserRepositoryImpl, MongooseModule],
+  providers: [UserRepositoryImpl, AnnualProgressRepository, WeeklyProgressRepository],
+  exports: [UserRepositoryImpl, AnnualProgressRepository, WeeklyProgressRepository, MongooseModule],
 })
 export class DatabaseModule {}
