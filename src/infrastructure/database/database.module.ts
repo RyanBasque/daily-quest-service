@@ -11,7 +11,12 @@ import { UserRepositoryImpl } from '../repositories/user.repository';
       useFactory: async (configService: ConfigService) => {
         const uri = configService.get<string>('MONGODB_URI');
         console.log('🔄 [MongoDB] Tentando conectar ao banco de dados...');
-        console.log('🔗 [MongoDB] URI:', uri?.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@')); // Oculta a senha no log
+        if (uri) {
+          console.log(
+            '🔗 [MongoDB] URI:',
+            uri.replace(/\/\/([^:]+):([^@]+)@/, '//$1:****@'),
+          ); // Oculta a senha no log
+        }
         
         return {
           uri,
@@ -21,6 +26,15 @@ import { UserRepositoryImpl } from '../repositories/user.repository';
             });
             connection.on('error', (error) => {
               console.error('❌ [MongoDB] Erro na conexão:', error.message);
+              if (
+                error.message.includes('SSL') ||
+                error.message.includes('tlsv1 alert internal error') ||
+                error.message.includes('whitelisted')
+              ) {
+                console.error(
+                  '💡 [MongoDB] Verifique se o seu IP está na Whitelist do MongoDB Atlas (Network Access).',
+                );
+              }
             });
             connection.on('disconnected', () => {
               console.log('⚠️  [MongoDB] Desconectado do banco de dados');
