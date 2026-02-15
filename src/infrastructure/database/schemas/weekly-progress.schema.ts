@@ -3,9 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type WeeklyProgressDocument = HydratedDocument<WeeklyProgressSchema>;
 
-@Schema({ 
+@Schema({
   timestamps: true,
-  collection: 'weekly_progress'
+  collection: 'weekly_progress',
 })
 export class WeeklyProgressSchema {
   @Prop({ required: true })
@@ -32,5 +32,5 @@ export class WeeklyProgressSchema {
 
 export const WeeklyProgressSchemaFactory = SchemaFactory.createForClass(WeeklyProgressSchema);
 
-// Create unique index for userId + year + weekNumber combination
 WeeklyProgressSchemaFactory.index({ userId: 1, year: 1, weekNumber: 1 }, { unique: true });
+

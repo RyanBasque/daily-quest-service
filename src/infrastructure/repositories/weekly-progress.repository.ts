@@ -3,7 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { WeeklyProgress } from '@domain/entities/weekly-progress.entity';
 import { WeeklyProgressRepositoryInterface } from '@domain/repositories/weekly-progress.repository.interface';
-import { WeeklyProgressSchema, WeeklyProgressDocument } from '../database/schemas/weekly-progress.schema';
+import {
+  WeeklyProgressSchema,
+  WeeklyProgressDocument,
+} from '../database/schemas/weekly-progress.schema';
 
 @Injectable()
 export class WeeklyProgressRepository implements WeeklyProgressRepositoryInterface {
@@ -12,7 +15,11 @@ export class WeeklyProgressRepository implements WeeklyProgressRepositoryInterfa
     private weeklyProgressModel: Model<WeeklyProgressDocument>,
   ) {}
 
-  async findByUserIdYearAndWeek(userId: string, year: number, weekNumber: number): Promise<WeeklyProgress | null> {
+  async findByUserIdYearAndWeek(
+    userId: string,
+    year: number,
+    weekNumber: number,
+  ): Promise<WeeklyProgress | null> {
     const doc = await this.weeklyProgressModel.findOne({ userId, year, weekNumber }).exec();
     if (!doc) return null;
     return this.mapToEntity(doc);
@@ -23,7 +30,7 @@ export class WeeklyProgressRepository implements WeeklyProgressRepositoryInterfa
       .find({ userId, year })
       .sort({ weekNumber: 1 })
       .exec();
-    return docs.map(doc => this.mapToEntity(doc));
+    return docs.map((doc) => this.mapToEntity(doc));
   }
 
   async findAllByUserId(userId: string): Promise<WeeklyProgress[]> {
@@ -31,7 +38,7 @@ export class WeeklyProgressRepository implements WeeklyProgressRepositoryInterfa
       .find({ userId })
       .sort({ year: -1, weekNumber: -1 })
       .exec();
-    return docs.map(doc => this.mapToEntity(doc));
+    return docs.map((doc) => this.mapToEntity(doc));
   }
 
   async create(progress: WeeklyProgress): Promise<WeeklyProgress> {

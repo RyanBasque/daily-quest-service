@@ -3,9 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<UserSchema>;
 
-@Schema({ 
+@Schema({
   timestamps: true,
-  collection: 'users'
+  collection: 'users',
 })
 export class UserSchema {
   @Prop({ required: true, unique: true })

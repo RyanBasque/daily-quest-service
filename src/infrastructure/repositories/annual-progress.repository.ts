@@ -3,7 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AnnualProgress } from '@domain/entities/annual-progress.entity';
 import { AnnualProgressRepositoryInterface } from '@domain/repositories/annual-progress.repository.interface';
-import { AnnualProgressSchema, AnnualProgressDocument } from '../database/schemas/annual-progress.schema';
+import {
+  AnnualProgressSchema,
+  AnnualProgressDocument,
+} from '../database/schemas/annual-progress.schema';
 
 @Injectable()
 export class AnnualProgressRepository implements AnnualProgressRepositoryInterface {
@@ -20,7 +23,7 @@ export class AnnualProgressRepository implements AnnualProgressRepositoryInterfa
 
   async findAllByUserId(userId: string): Promise<AnnualProgress[]> {
     const docs = await this.annualProgressModel.find({ userId }).sort({ year: -1 }).exec();
-    return docs.map(doc => this.mapToEntity(doc));
+    return docs.map((doc) => this.mapToEntity(doc));
   }
 
   async create(progress: AnnualProgress): Promise<AnnualProgress> {

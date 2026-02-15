@@ -6,7 +6,10 @@ import { AnnualProgressRepository } from '@infrastructure/repositories/annual-pr
 export class CreateAnnualProgressUseCase {
   constructor(private readonly repository: AnnualProgressRepository) {}
 
-  async execute(userId: string, data: Omit<AnnualProgress, 'id' | 'createdAt' | 'updatedAt'>): Promise<AnnualProgress> {
+  async execute(
+    userId: string,
+    data: Omit<AnnualProgress, 'id' | 'createdAt' | 'updatedAt'>,
+  ): Promise<AnnualProgress> {
     const progress = new AnnualProgress({
       userId,
       year: data.year,

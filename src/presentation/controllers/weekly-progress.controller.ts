@@ -1,14 +1,14 @@
-import { 
-  Controller, 
-  Get, 
-  Post, 
-  Body, 
-  Param, 
-  UseGuards, 
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
   Request,
   HttpCode,
   HttpStatus,
-  Query
+  Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CreateWeeklyProgressDto } from '../dtos/create-weekly-progress.dto';
@@ -33,11 +33,7 @@ export class WeeklyProgressController {
   }
 
   @Get(':year/:week')
-  async getByYearAndWeek(
-    @Request() req, 
-    @Param('year') year: string,
-    @Param('week') week: string
-  ) {
+  async getByYearAndWeek(@Request() req, @Param('year') year: string, @Param('week') week: string) {
     const userId = req.user.sub;
     const yearNum = parseInt(year, 10);
     const weekNum = parseInt(week, 10);
