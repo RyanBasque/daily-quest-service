@@ -4,17 +4,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './controllers/auth.controller';
 import { UserController } from './controllers/user.controller';
 import { HealthController } from './controllers/health.controller';
-import { AnnualProgressController } from './controllers/annual-progress.controller';
-import { WeeklyProgressController } from './controllers/weekly-progress.controller';
+import { QuestController } from './controllers/quest.controller';
+import { ProgressController } from './controllers/progress.controller';
 import { LoginUseCase } from '@application/use-cases/auth/login.use-case';
 import { GetUserByIdUseCase } from '@application/use-cases/user/get-user-by-id.use-case';
 import { RegisterUseCase } from '@application/use-cases/auth/register.use-case';
-import { GetAnnualProgressUseCase } from '@application/use-cases/progress/get-annual-progress.use-case';
-import { CreateAnnualProgressUseCase } from '@application/use-cases/progress/create-annual-progress.use-case';
-import { ListAnnualProgressUseCase } from '@application/use-cases/progress/list-annual-progress.use-case';
-import { GetWeeklyProgressUseCase } from '@application/use-cases/progress/get-weekly-progress.use-case';
-import { CreateWeeklyProgressUseCase } from '@application/use-cases/progress/create-weekly-progress.use-case';
-import { ListWeeklyProgressUseCase } from '@application/use-cases/progress/list-weekly-progress.use-case';
+import { RecalculateProgressUseCase } from '@application/use-cases/progress/recalculate-progress.use-case';
+import { GetProgressUseCase } from '@application/use-cases/progress/get-progress.use-case';
+import { CreateQuestUseCase } from '@application/use-cases/quest/create-quest.use-case';
+import { ListQuestsUseCase } from '@application/use-cases/quest/list-quests.use-case';
+import { UpdateQuestUseCase } from '@application/use-cases/quest/update-quest.use-case';
+import { DeleteQuestUseCase } from '@application/use-cases/quest/delete-quest.use-case';
 import { DatabaseModule } from '@infrastructure/database/database.module';
 
 @Module({
@@ -35,19 +35,19 @@ import { DatabaseModule } from '@infrastructure/database/database.module';
     AuthController,
     UserController,
     HealthController,
-    AnnualProgressController,
-    WeeklyProgressController,
+    QuestController,
+    ProgressController,
   ],
   providers: [
+    RecalculateProgressUseCase,
+    GetProgressUseCase,
     LoginUseCase,
-    GetUserByIdUseCase,
     RegisterUseCase,
-    GetAnnualProgressUseCase,
-    CreateAnnualProgressUseCase,
-    ListAnnualProgressUseCase,
-    GetWeeklyProgressUseCase,
-    CreateWeeklyProgressUseCase,
-    ListWeeklyProgressUseCase,
+    GetUserByIdUseCase,
+    CreateQuestUseCase,
+    ListQuestsUseCase,
+    UpdateQuestUseCase,
+    DeleteQuestUseCase,
   ],
 })
 export class PresentationModule {}

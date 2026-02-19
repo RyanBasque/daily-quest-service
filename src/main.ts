@@ -32,7 +32,7 @@ async function bootstrap() {
   // Listen on all network interfaces (0.0.0.0) to accept connections from iOS/Android devices
   await app.listen(port, '0.0.0.0');
   console.log(`🚀 Application is running on: http://localhost:${port}`);
-  console.log(`📱 Network access: http://192.168.15.85:${port}`);
+  console.log(`📱 Network access: http://192.168.15.122:${port}`);
 }
 
 bootstrap();

@@ -2,17 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema, UserSchemaFactory } from './schemas/user.schema';
-import {
-  AnnualProgressSchema,
-  AnnualProgressSchemaFactory,
-} from './schemas/annual-progress.schema';
-import {
-  WeeklyProgressSchema,
-  WeeklyProgressSchemaFactory,
-} from './schemas/weekly-progress.schema';
+import { Quest, QuestSchema } from './schemas/quest.schema';
+import { Progress, ProgressSchema } from './schemas/progress.schema';
 import { UserRepositoryImpl } from '../repositories/user.repository';
-import { AnnualProgressRepository } from '../repositories/annual-progress.repository';
-import { WeeklyProgressRepository } from '../repositories/weekly-progress.repository';
+import { QuestRepository } from '../repositories/quest.repository';
+import { ProgressRepository } from '../repositories/progress.repository';
 
 @Module({
   imports: [
@@ -54,11 +48,20 @@ import { WeeklyProgressRepository } from '../repositories/weekly-progress.reposi
     }),
     MongooseModule.forFeature([
       { name: UserSchema.name, schema: UserSchemaFactory },
-      { name: AnnualProgressSchema.name, schema: AnnualProgressSchemaFactory },
-      { name: WeeklyProgressSchema.name, schema: WeeklyProgressSchemaFactory },
+      { name: Quest.name, schema: QuestSchema },
+      { name: Progress.name, schema: ProgressSchema },
     ]),
   ],
-  providers: [UserRepositoryImpl, AnnualProgressRepository, WeeklyProgressRepository],
-  exports: [UserRepositoryImpl, AnnualProgressRepository, WeeklyProgressRepository, MongooseModule],
+  providers: [
+    UserRepositoryImpl,
+    QuestRepository,
+    ProgressRepository,
+  ],
+  exports: [
+    UserRepositoryImpl,
+    QuestRepository,
+    ProgressRepository,
+    MongooseModule,
+  ],
 })
 export class DatabaseModule {}
