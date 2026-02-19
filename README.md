@@ -52,15 +52,8 @@ npm run start:prod
 
 ## Endpoints
 
-### Autenticação
+For detailed API documentation, please refer to [API_DOCS.md](./API_DOCS.md).
 
-- `POST /auth/login` - Login com credenciais
-  ```json
-  {
-    "email": "user@example.com",
-    "password": "password123"
-  }
-  ```
 
 ### Usuários Mockados
 
