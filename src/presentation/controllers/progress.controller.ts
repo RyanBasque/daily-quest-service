@@ -38,6 +38,7 @@ export class ProgressController {
     @Query('month') month?: string,
     @Query('date') dateString?: string,
   ) {
+    console.log(`[ProgressController] GET ${req.url}`);
     const userId = req.user.sub;
 
     if (!type || !Object.values(ProgressType).includes(type)) {
